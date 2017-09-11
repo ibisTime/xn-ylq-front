@@ -219,7 +219,7 @@ define([
                 area = sessionStorage.getItem("area") || "",
                 longitude = sessionStorage.getItem("longitude", longitude) || "",
                 latitude = sessionStorage.getItem("latitude", latitude) || "";
-                loading.createLoading("定位中...");
+                // loading.createLoading("定位中...");
                 
                 if(!province){
                 	//加载地图，调用浏览器定位服务
@@ -241,11 +241,16 @@ define([
 			                    province = addressComponent.province,
 			                    city = addressComponent.city,
 			                    area = addressComponent.district;
-			                
+                                township = addressComponent.township;
+                                street = addressComponent.street;
+                                streetNumber =  addressComponent.streetNumber;
+                                
+			                     
 			                if(province && city && area){
 				                sessionStorage.setItem("province",province),
 				                sessionStorage.setItem("city",city),
 				                sessionStorage.setItem("area",area),
+                                sessionStorage.setItem("street",township + street + streetNumber),
 				                sessionStorage.setItem("longitude", lng),
 				                sessionStorage.setItem("latitude", lat);
 				                loading.hideLoading();
@@ -258,7 +263,7 @@ define([
 			            });
 			            AMap.event.addListener(geolocation, 'error', function(data) {
 			            	loading.hideLoading();
-			                errFun();
+			                // errFun();
 			            });      //返回定位出错信息
 			        });
                 }else{

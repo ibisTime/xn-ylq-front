@@ -27,8 +27,9 @@ define([
 			dprovince = sessionStorage.getItem("province");
 			dcity = sessionStorage.getItem("city");
 			darea = sessionStorage.getItem("area");
+			dstreet = sessionStorage.getItem("street");
 			
-    		$('.r-address').html(dprovince + " "+ dcity + " "+ darea)
+    		$('.r-address').html(dprovince + " "+ dcity + " "+ darea + " "+ dstreet)
     		loading.hideLoading();
     		
     		addListener();
@@ -36,7 +37,7 @@ define([
     		
 			loading.hideLoading();
     		addListener();
-			base.showMsg("定位地址失败",1000);
+			// base.showMsg("定位地址失败",1000);
 		})
     }
     
@@ -177,6 +178,7 @@ define([
 					"province": dprovince,
 					"city": dcity,
 					"area": darea,
+					"address": dstreet,
 					"systemCode":SYSTEM_CODE,
 					"companyCode":COMPANY_CODE
 				}
