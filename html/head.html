@@ -8,6 +8,23 @@
 <meta itemprop="description" name="description" content="" />
 <meta itemprop="image" content="" />
 <link rel="shortcut icon" href="../images/favicon.ico" />
-<link rel="stylesheet" href="/static/css/base_1fc078f.css">
-<link rel="stylesheet" href="/static/css/share_0620060.css">
-<script type="text/javascript" src="/static/js/config_174ae78.js"></script>
+<link rel="stylesheet" href="../../css/base.css">
+<link rel="stylesheet" href="../../css/share.css">
+<script>
+    (function(doc, win) {
+        var docEl = doc.documentElement,
+            resizeEvt = 'orientationchange' in win ? 'orientationchange' : 'resize',
+            recalc = function() {
+                var clientWidth = docEl.clientWidth;
+                if (!clientWidth) return;
+                if(clientWidth < 750)
+                    docEl.style.fontSize = clientWidth / 7.5 + 'px';
+                else
+                    docEl.style.fontSize = '100px';
+            };
+        if (!doc.addEventListener) return;
+        win.addEventListener(resizeEvt, recalc, false);
+        doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);
+</script>
+<script type="text/javascript" src="../../js/config.js"></script>

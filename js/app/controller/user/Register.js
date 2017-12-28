@@ -43,7 +43,7 @@ define([
     
 
     function addListener() {
-	$(".r-download").click(function(){
+		$(".r-download").click(function(){
         	
         	window.location.href= '../share/share-qrcord.html';
         });    	
@@ -95,7 +95,25 @@ define([
 	                base.showMsg("获取注册协议失败");
 	            });
         });
-        
+
+        $(".r-protocol1").click(function(){
+
+            $(".popup-protocol").fadeIn(500);
+            Ajax.get("805917",{
+                "ckey": "infoCollectRule",
+                "systemCode": SYSTEM_CODE,
+                "companyCode":COMPANY_CODE
+            }).then(function(res) {
+                if (res.success) {
+                    $(".r-popup-tit").html(res.data.cvalue)
+                    $(".r-popup-conten").html(res.data.note)
+                } else {
+                    base.showMsg(res.msg);
+                }
+            }, function() {
+                base.showMsg("获取注册协议失败");
+            });
+        });
         //验证码
         $("#rbtn-captcha").click(function(){
         	

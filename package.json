@@ -4,8 +4,9 @@
   "description": "",
   "main": "fis-conf.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "fis3 release -d ../../cd-data-front/dist -w"
+    "server": "fis3 release -d ../../cd-data-front/dist -w",
+    "dev": "fis3 release -d D:/chengdai_dabao/ylq -w",
+    "build": "fis3 release -d D:/chengdai_dabao/ylq prod"
   },
   "author": "",
   "license": "ISC",
