@@ -1613,3 +1613,18 @@ pl23{
 	flex-shrink: 0;
 }
 
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #fff;
+}
+
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #fff;
+}
+
+input:-ms-input-placeholder{
+    color: #fff;
+}
+
+input::-webkit-input-placeholder{
+    color: #fff;
+}

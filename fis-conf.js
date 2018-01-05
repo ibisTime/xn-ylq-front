@@ -58,8 +58,12 @@ fis.media("prod")
         packTo: '/pkg/common.js',
         packOrder: -100
     })
-    .match('{/js/lib/*.js,/js/app/util/*.js,/js/app/controller/base.js}', {
-        requires: ['/js/require.js'],
+    .match('/js/lib/jquery-2.1.4.js', {
+        packTo: '/pkg/common.js',
+        packOrder: -90
+    })
+    .match('{/js/app/util/ajax.js,/js/app/util/dialog.js,/js/app/module/loading/loading.js}', {
+        requires: ['/js/require.js', '/js/lib/jquery-2.1.4.js'],
         packTo: '/pkg/common.js'
     })
     .match("**.js", {

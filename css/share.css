@@ -4,6 +4,8 @@ body{
 	color: #484848;
 	font-size: .24rem;
 	line-height: inherit;
+	-webkit-overflow-scrolling: touch;
+
 }
 div{
 	font-size: .24rem;
