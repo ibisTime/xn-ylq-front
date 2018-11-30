@@ -1,8 +1,5 @@
-node_modules/
-*.iml
+static/node_modules/
+/dist/
+.project
 .idea/
-temp/
-tmp/
-*.log
-.DS_Store
-npm-debug.log
+
