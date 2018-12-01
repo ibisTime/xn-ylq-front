@@ -3,24 +3,24 @@ define([
     'app/util/ajax',
     'app/module/loading/loading',
 ], function(base, Ajax,loading) {
-	
-	var code = base.getUrlParam("code");
+
+	var companyCode = base.getUrlParam("companyCode") || COMPANY_CODE;
 	var captchaTime = 60;//重新发送时间
-	var userReferee = base.getUrlParam("mobile");
-	var userRefereeKind = base.getUrlParam("kind");
+	var userReferee = base.getUrlParam("userReferee");
+	var userRefereeKind = base.getUrlParam("userRefereeKind");
 	var temp ="";
 	var dCityData = "";
 	var dprovince ;
 	var dcity ;
 	var darea ;
-	
+
     init();
     //放入省市区json
     base.getAddress()
         .then(function(data){
         	dCityData = data.citylist;
         });
-        
+
 
     function init() {
 		base.getInitLocation(function(res){
@@ -28,25 +28,25 @@ define([
 			dcity = sessionStorage.getItem("city");
 			darea = sessionStorage.getItem("area");
 			dstreet = sessionStorage.getItem("street");
-			
+
     		$('.r-address').html(dprovince + " "+ dcity + " "+ darea + " "+ dstreet)
     		loading.hideLoading();
-    		
+
     		addListener();
     	},function(){
-    		
+
 			loading.hideLoading();
     		addListener();
 			// base.showMsg("定位地址失败",1000);
 		})
     }
-    
+
 
     function addListener() {
 		$(".r-download").click(function(){
-        	
+
         	window.location.href= '../share/share-qrcord.html';
-        });    	
+        });
 
 		$(".r-input").focus(function(){
         	$(this).siblings(".r-input-placeholder").html(" ");
@@ -57,10 +57,10 @@ define([
         		$(this).siblings(".r-input-placeholder").html(txt);
         	}
         })
-        
+
         $("#r-tel").blur(function(){
         	var userTel = $(this).val();
-        	
+
         	getProvingTel($(this));
         	if(temp == "" || temp !=userTel){
         		temp =userTel
@@ -70,20 +70,20 @@ define([
         		temp = temp;
         	}
         })
-        
+
         //注册协议
-        
+
         $(".r-popup-close").click(function(){
         	$(".r-popup").fadeOut(500);
         });
-        
+
         $(".r-protocol").click(function(){
-        	
+
         	$(".popup-protocol").fadeIn(500);
         	Ajax.get("805917",{
 	        	"ckey": "regProtocol",
 	    		"systemCode": SYSTEM_CODE,
-	    		"companyCode":COMPANY_CODE
+	    		"companyCode": companyCode
 	        }).then(function(res) {
 	                if (res.success) {
 	                	$(".r-popup-tit").html(res.data.cvalue)
@@ -116,35 +116,35 @@ define([
         });
         //验证码
         $("#rbtn-captcha").click(function(){
-        	
+
         	var userTel = $("#r-tel").val();
-        	
+
         	if(userTel == null || userTel == ""){
         		base.showMsg("请输入手机号");
         	}else if(getProvingTel($("#r-tel"))){
-        		
+
         		if(captchaTime==60){
 					timer = setInterval(function(){
 						captchaTime--;
-						
+
 						$("#rbtn-captcha").html("重新发送("+captchaTime+")");
-						
+
 						if(captchaTime<0){
 							clearInterval(timer);
 							captchaTime=60;
 							$("#rbtn-captcha").html("获取验证码");
 						}
 					},1000);
-					
+
 					var parem={
-						"mobile":userTel,
-						"bizType":"805041",
+						"mobile": userTel,
+						"bizType": "805041",
 			            "kind": "C",
 			            "systemCode":SYSTEM_CODE,
 			            "companyCode":COMPANY_CODE
 					}
-					
-					Ajax.post("805950",{json:parem})
+
+					Ajax.post("630090",{json:parem})
 						.then(function(res) {
 			                if (res.success) {
 			                } else {
@@ -156,22 +156,22 @@ define([
 				}
         	}
         });
-        
-        
+
+
         $("#r-address").click(function(){
-        	
+
         	getProvinceBuy();
-        	
+
     	});
-        
-        
+
+
         //提交
         $("#rbtn-sub").click(function(){
         	var userTel = $("#r-tel").val();
         	var userCaptcha = $("#r-captcha").val();
         	var userPwd = $("#r-pwd").val();
         	var address = $('.r-address').html()
-        	
+
         	if(userTel == null || userTel == ""){
         		base.showMsg("请输入手机号");
         	}else if(userCaptcha == null || userCaptcha == ""){
@@ -183,7 +183,7 @@ define([
         	// 	base.showMsg("请选择省市区");
         	// }
         	else if(getProvingTel($("#r-tel"))){
-        		
+
 				var parem={
 					"mobile": userTel,
 					"loginPwd": userPwd,
@@ -200,7 +200,7 @@ define([
 					"systemCode":SYSTEM_CODE,
 					"companyCode":COMPANY_CODE
 				}
-	        	
+
 	        	Ajax.post("623800",{json:parem})
 					.then(function(res) {
 		                if (res.success) {
@@ -214,21 +214,21 @@ define([
 		            }, function() {
 		                base.showMsg("注册失败");
 	            	});
-					
+
         	}
-        	
+
         })
-        
+
     }
-    
-    
+
+
     function getCaptchaTime(obj,code){
 		var timer ;
-		
+
 		timer = setInterval(function(){
 			code--;
 			obj.html("重新发送("+code+")");
-			
+
 			if(code<0){
 				clearInterval(timer);
 				code=60
@@ -236,11 +236,11 @@ define([
 			}
 		},1000)
 	}
-    
+
     function getProvingTel(obj){
 		var val=obj.val();
 		var mobilevalid = /^(0|86|17951)?(13[0-9]|15[012356789]|17[0678]|18[0-9]|14[57])[0-9]{8}$/;
-		
+
 		if (!mobilevalid.test(val)) {
 			base.showMsg("请输入正确的手机号码！");
 			return false;
@@ -248,19 +248,19 @@ define([
 			return true;
 		}
 	}
-    
-    
+
+
     //选择省
 	function getProvinceBuy() {
     	$("body #address_div").remove();
 	    var province = dCityData;
 	    var newStr = [];
-	    
+
 	    newStr.push("<div id='address_div'><div class='addressTop'><samp></samp>选择地区</div><ul>");
 	    for (var i = 0, psize = province.length; i < psize; i++) {
 	        newStr.push("<li data-num='" + i + "'>" + province[i].p + "</li>");
 	    }
-	    
+
 	    newStr.push("</ul></div>");
 	    $("body").append(newStr.join(""));
 	    $("#address_div").on("click","ul li",function(){
@@ -268,9 +268,9 @@ define([
 
 			dprovince = $(this).html();
 			getCityBuy(val);
-			
+
 	    })
-	    
+
 	    addressOut();
 	}
 
@@ -286,34 +286,34 @@ define([
 	    newStr.push("</ul></div>");
 	    $("body #address_div").remove();
 	    $("body").append(newStr.join(""));
-	    
+
 	    $("#address_div").on("click","ul li",function(){
             var valTml = $(this).attr("data-num");
                 valTml = valTml.split(",");
             var val = valTml[0];
             var val1 = valTml[1];
-            
+
             if(city[val1].a){
-            	
+
             	dcity = $(this).html();
-            	
+
             	getAreaBuy(val, val1);
             }else{
             	dcity = dprovince;
             	darea = $(this).html();
-            	
+
         		$('.r-address').html(dprovince + " "+ darea);
             	$("body #address_div").remove();
             }
-            
+
 	    });
-	    
+
 		addressOut();
 	}
-	
+
 	//选择区
 	function getAreaBuy(val, val1) {
-		
+
 	    var province = dCityData;
 	    var city = province[val1].c;
 	    var area = city[val].a;
@@ -325,12 +325,12 @@ define([
 	    newStr.push("</ul></div>");
 	    $("body #address_div").remove();
 	    $("body").append(newStr.join(""));
-        
+
         $("#address_div").on("click","ul li",function(){
-        	
+
         	darea = $(this).html();
         	$('.r-address').html(dprovince + " "+ dcity + " "+ darea)
-        	
+
             $("body #address_div").remove();
         })
         addressOut();
@@ -341,6 +341,6 @@ define([
             $("body #address_div").remove();
         });
     }
-    
-    
+
+
 });

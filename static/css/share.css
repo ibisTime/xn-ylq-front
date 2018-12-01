@@ -94,7 +94,7 @@ samp,i,b,input{
 }
 .d-section .d-amount{
 	padding: .56rem 0;
-	
+
 }
 .d-section .d-amount-txt{
 	font-size: .28rem;
@@ -253,10 +253,10 @@ samp,i,b,input{
 	text-align: center;
 }
 
-/*注册*/ 
+/*注册*/
 .bg-r{
 	background-image: url(../images/bg1.png);
-	background-position: center;
+	background-position: center bottom;
 	background-size: cover;
 }
 .bg-b{
@@ -681,7 +681,7 @@ samp,i,b,input{
 	width: 100%;
 	height: 100%;
 	background-image: url(../images/bg1.png);
-	background-position: center;
+	background-position: center bottom;
 	background-size: cover;
 	position: relative;
 }
@@ -713,7 +713,7 @@ samp,i,b,input{
 	color: #fff;
 	font-size: .35rem;
 	line-height: .78rem;
-	text-align: center;	
+	text-align: center;
 	padding-top: 6rem;
 }
 .sq-btn1{

@@ -76,8 +76,8 @@ define(["jquery"], function($) {
 
             token && (param["token"] = token);
             userId && (param["userId"] = userId);
-//          param["systemCode"] = SYSTEM_CODE;
-            // param["companyCode"] = COMPANY_CODE;
+            param["systemCode"] = SYSTEM_CODE;
+            param["companyCode"] = COMPANY_CODE;
 
             var sendUrl = getUrl(code);
             var sendParam = {

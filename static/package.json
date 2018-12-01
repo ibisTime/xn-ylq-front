@@ -4,9 +4,9 @@
   "description": "",
   "main": "fis-conf.js",
   "scripts": {
-    "server": "fis3 release -d ../../cd-data-front/dist -w",
-    "dev": "fis3 release -d D:/chengdai_dabao/ylq_front -w",
-    "build": "fis3 release -d D:/chengdai_dabao/ylq_front prod"
+    "start": "fis3 release -d ../dist -w",
+    "build": "fis3 release -d ../dist",
+    "prod": "fis3 release -d ../dist prod"
   },
   "author": "",
   "license": "ISC",
