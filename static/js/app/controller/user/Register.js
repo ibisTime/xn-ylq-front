@@ -13,7 +13,8 @@ define([
 	var dprovince ;
 	var dcity ;
 	var darea ;
-
+	var dstreet ;
+	console.log(companyCode);
     init();
     //放入省市区json
     base.getAddress()
@@ -102,7 +103,7 @@ define([
             Ajax.get("805917",{
                 "ckey": "infoCollectRule",
                 "systemCode": SYSTEM_CODE,
-                "companyCode":COMPANY_CODE
+                "companyCode":companyCode
             }).then(function(res) {
                 if (res.success) {
                     $(".r-popup-tit").html(res.data.cvalue)
@@ -136,15 +137,15 @@ define([
 						}
 					},1000);
 
-					var parem={
+					var param={
 						"mobile": userTel,
 						"bizType": "805041",
 			            "kind": "C",
-			            "systemCode":SYSTEM_CODE,
-			            "companyCode":COMPANY_CODE
-					}
+			            "systemCode": SYSTEM_CODE,
+			            "companyCode": companyCode
+					};
 
-					Ajax.post("630090",{json:parem})
+					Ajax.post("630090",{json:param})
 						.then(function(res) {
 			                if (res.success) {
 			                } else {
@@ -198,10 +199,10 @@ define([
 					"area": darea,
 					"address": dstreet,
 					"systemCode":SYSTEM_CODE,
-					"companyCode":COMPANY_CODE
+					"companyCode":companyCode
 				}
 
-	        	Ajax.post("623800",{json:parem})
+	        	Ajax.post("805041",{json:parem})
 					.then(function(res) {
 		                if (res.success) {
 		                	base.confirm("注册成功，请下载APP！")

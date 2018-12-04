@@ -69,15 +69,17 @@ define(["jquery"], function($) {
             });
         },
         post: function(code, options) {
-            var param = options.json;
 
             var token = sessionStorage.getItem("tk") || "",
                 userId = sessionStorage.getItem("user") || "";
 
-            token && (param["token"] = token);
-            userId && (param["userId"] = userId);
-            param["systemCode"] = SYSTEM_CODE;
-            param["companyCode"] = COMPANY_CODE;
+            var commonParams = {};
+            token && (commonParams["token"] = token);
+            userId && (commonParams["userId"] = userId);
+            commonParams["systemCode"] = SYSTEM_CODE;
+            commonParams["companyCode"] = COMPANY_CODE;
+
+            var param = $.extend(commonParams, options.json);
 
             var sendUrl = getUrl(code);
             var sendParam = {
