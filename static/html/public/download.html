@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <link rel="import" href="../head.html?__inline">
+    <title></title>
+    <!--SCRIPT_PLACEHOLDER-->
+</head>
+
+<body class="register-bg">
+
+    <div class="download-container">
+        <div class="logo-wrap"><div class="img"></div></div>
+        <div class="title">双龙</div>
+        <div class="btnWrap">
+            <button id="AndroidBtn" class="am-button">Android下载</button>
+            <button id="IOSBtn" class="am-button ml50">IOS下载</button>
+        </div>
+    </div>
+    <div class="upload-mask hidden">
+        <img src="../../images/rightArrow.png" />
+        <p>请点击右上角<br/>点击在浏览器打开下载APP</p>
+    </div>
+
+    <link rel="import" href="../footer.html?__inline">
+    <script data-loader>
+        require(['app/controller/public/Download']);
+    </script>
+</body>
+</html>

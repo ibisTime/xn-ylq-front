@@ -1,4 +1,9 @@
-define(["jquery"], function($) {
+define([
+    "jquery",
+    'app/util/cookie',
+    'app/util/dialog',
+    'app/module/loading'
+], function($, CookieUtil, dialog, loading) {
     var cache = {};
 
     function getUrl(code) {
@@ -6,111 +11,91 @@ define(["jquery"], function($) {
     }
 
     function clearSessionUser() {
-        sessionStorage.removeItem("user"); //userId
-        sessionStorage.removeItem("tk"); //token
+        sessionStorage.removeItem("userId"); //userId
+        sessionStorage.removeItem("token"); //token
+    }
+
+    function showMsg(msg, time) {
+        var d = dialog({
+            content: msg,
+            quickClose: true
+        });
+        d.show();
+        setTimeout(function() {
+            d.close().remove();
+        }, time || 1500);
+        return d;
     }
     return {
-        get1: function(url, param, reload, sync) {
-            if (typeof param == 'boolean' || typeof param == 'undefined') {
-                reload = param;
-                param = {};
+        get: function(code, json, reload, noToken) {
+            if (typeof json == "undefined" || typeof json == "boolean") {
+                reload = json;
+                json = {};
             }
-            var tokenStr = '_=' + new Date().valueOf(),
-                symbol = (url.indexOf('?') === -1 ? '?' : '&');
-            if (url && !/_=.*/.test(url)) {
-                var send_url = url + symbol + tokenStr;
-            }
-            var cache_url = url + JSON.stringify(param);
-            if (reload) {
-                delete cache[cache_url];
-            }
-            if (!cache[cache_url]) {
-                cache[cache_url] = $.ajax({
-                    async: !sync,
-                    type: 'get',
-                    url: send_url,
-                    data: param
-                });
-                cache[cache_url].then(function(res) {
-                    if(!res.success && res.timeout && location.pathname.indexOf("/buy.html") == -1){
-                        sessionStorage.setItem("user", "0");
-                        location.href = "../user/login.html?return=" + encodeURIComponent(location.pathname + location.search);
-                    }
-                }, function(res) {
-                    var d = dialog({
-                        content: res.msg || res.errorInfo || "网络出错",
-                        quickClose: true
-                    });
-                    d.show();
-                    setTimeout(function () {
-                        d.close().remove();
-                    }, 2000);
-                });
-            }
-            return cache[cache_url];
+            return this.post(code, json, !!reload, noToken);
         },
-        get: function(code, param, cache) {
-            if (typeof param == 'undefined' || typeof param == "boolean") {
-                cache = param;
-                param = {};
-            }
+        post: function(code, json, reload, noToken) {
+            reload = typeof reload == "undefined" ? true : reload;
+            noToken = typeof noToken == "undefined" ? false : reload;
 
-            return this.post(code, {
-                json: param,
-                cache: cache === false ? false : true,
-                close: true
-            }, true);
-        },
-        getIp: function(param) {
-            return $.ajax({
-                type: "get",
-                url: getUrl() + '/ip',
-                param: param
-            });
-        },
-        post: function(code, options) {
-
-            var token = sessionStorage.getItem("tk") || "",
-                userId = sessionStorage.getItem("user") || "";
-
+            var token = sessionStorage.getItem("token") || "";
             var commonParams = {};
-            token && (commonParams["token"] = token);
-            userId && (commonParams["userId"] = userId);
+
+            if(!noToken){
+                token && (commonParams["token"] = token);
+            }
             commonParams["systemCode"] = SYSTEM_CODE;
             commonParams["companyCode"] = COMPANY_CODE;
 
-            var param = $.extend(commonParams, options.json);
-
+            json = $.extend(commonParams, json);
             var sendUrl = getUrl(code);
             var sendParam = {
                 code: code,
-                json: param
+                json: json
             };
             var cache_url = sendUrl + JSON.stringify(sendParam);
-            if (!options.cache) {
-                delete cache[cache_url];
+            if (reload) {
+                delete cache[code];
             }
-            if (!cache[cache_url]) {
-                sendParam.json = JSON.stringify(param);
-                cache[cache_url] = $.ajax({
+            cache[code] = cache[code] || {};
+            if (!cache[code][cache_url]) {
+                sendParam.json = JSON.stringify(json);
+                cache[code][cache_url] = $.ajax({
                     type: 'post',
                     url: sendUrl,
                     data: sendParam
                 });
             }
-            return cache[cache_url].then(function(res) {
-                if (res.errorCode == "4") {
-                    clearSessionUser();
-                    // location.href = "../user/login.html?return=" + encodeURIComponent(location.pathname + location.search);
-                    // base.showMsg("登录超时");
+            return cache[code][cache_url].pipe(function(res) {
+
+//              if (res.errorCode == "4") {
+//                  clearSessionUser();
+//                  sessionStorage.setItem("l-return", location.pathname + location.search);
+//                  loading.hideLoading();
+//                  setTimeout(function() {
+//                      location.replace("../user/login.html");
+//                  }, 800);
+//                  return $.Deferred().reject("登录超时，请重新登录");
+//              }
+                if(res.errorInfo == "用户状态异常"){
+    				location.replace("../user/isRock.html?isRock=1");
                 }
-                var result = {};
-                res.errorCode == "0" ? (result.success = true, result.data = res.data) :
-                    (result.success = false, result.msg = res.errorInfo);
-                return result;
-            }, function(obj, error, msg) {
-                console.log(msg);
-                return msg;
+//              if(res.errorBizCode == "xn100001"){
+//                  clearSessionUser();
+//                  sessionStorage.setItem("l-return", location.pathname + location.search);
+//                  loading.hideLoading();
+//                  setTimeout(function() {
+//                      location.replace("../user/login.html");
+//                  }, 800);
+//                  return $.Deferred().reject("登录异常，请重新登录");
+//              }
+                if(res.errorCode != "0"){
+                    loading.hideLoading();
+                    return $.Deferred().reject(res.errorBizCode, res.errorInfo);
+                }
+                return res.data;
+            }).fail(function(error){
+                error && showMsg(error);
             });
         }
     };

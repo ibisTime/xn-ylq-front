@@ -2,11 +2,16 @@ fis.hook('amd', {
     baseUrl: "./js",
     paths: {
         'Handlebars': 'lib/handlebars.runtime-v3.0.3',
-        'IScroll': "lib/iscroll",
-        'iScroll': "lib/iscroll1",
+        'IScroll': "lib/iscroll/iscroll",
+        'iScroll': "lib/iscroll/iscroll1",
+        'jweixin': 'lib/jweixin-1.2.0',
         'jValidate': "lib/validate/jquery.validate",
         'jquery': "lib/jquery-2.1.4",
-        'swiper': "lib/swiper/swiper-3.3.1.jquery.min"
+        'picker': "lib/picker/picker.min.js",
+        'swiper': "lib/swiper/swiper-3.3.1.jquery.min",
+        'Quill': "lib/quill/quill",
+        'echarts': "lib/echarts/echarts",
+        'NoCaptcha': "lib/NoCaptcha/index"
     },
     shim: {
         "IScroll": {
@@ -17,16 +22,42 @@ fis.hook('amd', {
         }
     }
 });
-fis.match('*.{js,css}', {
-    useHash: true
-});
-
 fis.match('*', {
     release: '/static/$0',
     //useMap: true
 });
 fis.match('*.html', {
     release: '/$0'
+});
+fis.match('*.{css,less,scss}', {
+  preprocessor: fis.plugin('autoprefixer', {
+    "browsers": ["Android >= 2.1", "iOS >= 4", "ie >= 8", "firefox >= 15"],
+    "cascade": true
+  })
+})
+fis.match('**/*.scss', {
+    rExt: '.css',
+    parser: fis.plugin('node-sass', {
+        //fis-parser-node-sass option
+    })
+});
+fis.match('{/js/app/controller/**.js,/js/app/interface/**.js,/js/app/module/**.js}', {
+    parser: fis.plugin('babel-6.x', {
+        sourceMaps: true,
+        presets: [
+            'latest', 'es2016', 'ES2015', 'stage-0'
+        ]
+    }),
+    rExt: 'js'
+});
+fis.match('*.{js,css}', {
+    useHash: true
+}).match('config.js', {
+    useHash: false
+}).match('language.js', {
+    useHash: false
+}).match('errorCode.js', {
+    useHash: false
 });
 
 //npm install -g fis-parser-handlebars-3.x
@@ -42,9 +73,6 @@ fis.match('::package', {
         sourceMap: true,
         useInlineMap: true
     })
-});
-fis.match('/js/module/**', {
-    isMod: true
 });
 fis.media("prod")
     .match('::package', {
@@ -62,7 +90,7 @@ fis.media("prod")
         packTo: '/pkg/common.js',
         packOrder: -90
     })
-    .match('{/js/app/util/ajax.js,/js/app/util/dialog.js,/js/app/module/loading/loading.js}', {
+    .match('{/js/app/util/ajax.js,/js/app/util/cookie.js,/js/app/util/dialog.js,/js/app/module/loading/index.js}', {
         requires: ['/js/require.js', '/js/lib/jquery-2.1.4.js'],
         packTo: '/pkg/common.js'
     })
@@ -72,8 +100,20 @@ fis.media("prod")
     .match("**.css", {
         optimizer: fis.plugin('clean-css')
     })
-    .match("/css/*.css", {
-        packTo: '/pkg/common.css'
+    .match('/js/app/config.js', {
+        optimizer: null,
+        packTo: '/config/config.js',
+        useHash: false
+    })
+    .match('/js/app/language.js', {
+        optimizer: null,
+        packTo: '/config/language.js',
+        useHash: false
+    })
+    .match('/js/app/errorCode.js', {
+        optimizer: null,
+        packTo: '/config/errorCode.js',
+        useHash: false
     })
     .match('**.png', {
         optimizer: fis.plugin('png-compressor')

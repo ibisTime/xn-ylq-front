@@ -3,81 +3,55 @@
 
 <head>
     <link rel="import" href="../head.html?__inline">
-    <title>九州宝</title>
-	<!--SCRIPT_PLACEHOLDER-->
-	<script src="http://webapi.amap.com/maps?v=1.3&key=78f49f96b8417592c675c958b244fe08"></script>
+    <title>注册</title>
+    <!--SCRIPT_PLACEHOLDER-->
+    <script src="http://webapi.amap.com/maps?v=1.4.11&key=78f49f96b8417592c675c958b244fe08"></script>
 </head>
 
-<body class="hp100 bg-r">
-	<div class="r-wrap">
-		<div class="wp100"><p class="rtxt r-download">已有账号？请直接下载</p></div>
-		<div class="r-telWrap">
-			<div class="r-icon"><img src="../../images/icon-tel.png"></div>
-			<input class="r-style r-input" type="tel" id="r-tel" placeholder="请输入手机号码"/>
-			<!--<div class="r-style r-input-placeholder" data-txt="请输入手机号码">请输入手机号码</div>-->
-		</div>
+<body class="register-bg">
+    <div class="register-container">
+        <p class="goDownload">已有账号？请直接下载</p>
+        <form id="formWrapper" class="form-wrapper wp100">
+            <div class="form-item form-mobile">
+                <div class="am-flexbox">
+                    <i class="icon icon-mobile"></i>
+                    <input type="text" pattern="[0-9]*" placeholder="请输入手机号码" id="mobile" name="mobile" class="input-item"/>
+                </div>
+            </div>
+            <div class="form-item form-btn-item mt50">
+                <div class="am-flexbox">
+                    <i class="icon icon-sms"></i>
+                    <div class="input-item smsCaptcha-item">
+                        <input type="text" placeholder="手机验证码" id="smsCaptcha" name="smsCaptcha" pattern="[0-9]*"/>
+                    </div>
+                    <button class="item-button smsCaptcha-btn am-button am-button-small am-button-ghost" id="getVerification">获取验证码</button>
+                </div>
+            </div>
+            <div class="form-item form-mobile mt50">
+                <div class="am-flexbox">
+                    <i class="icon icon-pwd"></i>
+                    <input type="password" pattern="[0-9]*" placeholder="请输入密码" id="loginPwd" name="loginPwd" class="input-item"/>
+                </div>
+            </div>
+        </form>
+        <div class="btnWrap">
+            <button id="subBtn" class="am-button wp100">注册</button>
+        </div>
+        <div class="registerTxt r-protocol">注册即代表同意《借款服务与隐私协议》</div>
+    </div>
 
-		<div class="r-telWrap">
-			<div class="r-icon"><img src="../../images/icon-captcha.png"></div>
-			<input class="r-style r-input" type="number" id="r-captcha" placeholder="手机验证码"/>
-			<!--<div class="r-style r-input-placeholder" data-txt="手机验证码" >手机验证码</div>-->
-			<div class="rbtn-captcha" id="rbtn-captcha">获取验证码</div>
-		</div>
-
-		<div class="r-telWrap">
-			<div class="r-icon"><img src="../../images/icon-pwd.png"></div>
-			<input class="r-style r-input" type="password" id="r-pwd" placeholder="请输入密码"/>
-			<!--<div class="r-style r-input-placeholder" data-txt="请输入密码">请输入密码</div>-->
-		</div>
-
-		<div class="r-telWrap" id="r-address" style="display: none">
-			<div class="r-icon"><img src="../../images/address_white.png"></div>
-			<div class="r-style r-address" data-txt="请选择省市区">定位失败</div>
-		</div>
-
-		<input type="button" class="rbtn-sub" id="rbtn-sub" value="注册" />
-		<div class="wp100 tc"><p class="rtxt r-protocol">注册即代表同意《借款服务与隐私协议》</p></div>
-		<div class="wp100 tc"><p class="rtxt r-protocol1">与《信息收集使用规则》</p></div>
-	</div>
-
-	<div class="r-popup popup-protocol">
-		<div class="r-popup-close"><img src="../../images/icon-plus.png"/></div>
-		<div class="r-popup-html">
-			<div class="r-popup-body">
-				<h3 class="r-popup-tit"></h3>
-				<div class="r-popup-conten"></div>
-			</div>
-		</div>
-	</div>
-
-	<!--<div class="r-popup popup-address" >
-		<div class="r-popup-close" style="top: 50%; margin-top: -2.4rem;"><img src="../../images/icon-plus.png"/></div>
-		<div class="r-popup-html" style="height: 4rem; top: 50%; margin-top: -2rem;">
-			<div class="r-popup-body">
-				<div class="wp100 plr10 bb r-popup-div" id="province">
-					<div class="inline_block fs15">省份</div>
-					<div class="inline_block fr pr20 province fs15">请选择省</div>
-				    <img src="../images/更多@2x.png" class="more ">
-				</div>
-				<div class="wp100 plr10 bb r-popup-div" id="city">
-					<div class="inline_block cityTit fs15">城市</div>
-					<div class="inline_block fr pr20 city fs15">请选择市</div>
-				    <img src="../images/更多@2x.png" class="more ">
-				</div>
-				<div class="wp100 plr10 bb r-popup-div" id="area">
-					<div class="inline_block fs15">区县</div>
-					<div class="inline_block fr pr20 area fs15">请选择区</div>
-				    <img src="../images/更多@2x.png" class="more ">
-				</div>
-				<div class="popup-Btn">
-					<input type="button" id="popup-Btn" value="确定" />
-				</div>
-			</div>
-		</div>
-	</div>-->
+    <div class="r-popup popup-protocol">
+        <div class="r-popup-close"><img src="../../images/icon-plus.png"/></div>
+        <div class="r-popup-html">
+            <div class="r-popup-body">
+                <h3 class="r-popup-tit"></h3>
+                <div class="r-popup-conten"></div>
+            </div>
+        </div>
+    </div>
 
     <link rel="import" href="../footer.html?__inline">
-    <script data-loader>
+    <script>
         require(['app/controller/user/Register']);
     </script>
 </body>
