@@ -6,7 +6,7 @@ define([
     'app/interface/GeneralCtr'
 ], function(base, UserCtr, Validate, smsCaptcha, GeneralCtr) {
     var companyCode = base.getUrlParam("companyCode") || '';
-    var userReferee = base.getUrlParam("userReferee") || '';
+    var userReferee = base.getUrlParam("code") || '';
     var userRefereeKind = base.getUrlParam("userRefereeKind") || '';
     var timer;
     var dprovince ;

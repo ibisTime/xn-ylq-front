@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <link rel="import" href="../head.html?__inline">
+    <title>产品详情</title>
+    <!--SCRIPT_PLACEHOLDER-->
+</head>
+
+<body>
+
+<div class="product-detail-container">
+    <div class="content">
+        <div class="top">
+            <div class="amount">
+                <div class="amount-top"><img src="./../../images/amount@2x.png"><span>借款金额</span></div>
+                <div class="amount-bottom">1000.00元</div>
+            </div>
+            <div class="time">
+                <div class="time-top"><img src="./../../images/time@2x.png"><span>借款时长</span></div>
+                <div class="time-bottom">7天</div>
+            </div>
+        </div>
+        <div class="bottom">
+            <div class="info">
+                <p class="first"></p>
+                <p class="second"></p>
+                <p>以上费用预先扣除，实到<span class="primary-color">xx元</span></p>
+            </div>
+            <div class="return-amount">到期还款：<span class="orange-color return-amount-final">xx元</span></div>
+        </div>
+    </div>
+    <div class="tip orange-color">
+        <img src="./../../images/tip@2x.png">本平台禁止学生借款
+    </div>
+    <div class="button">下一步</div>
+</div>
+
+<link rel="import" href="../footer.html?__inline">
+<script data-loader>
+  require(['app/controller/product/product-detail']);
+</script>
+</body>
+</html>

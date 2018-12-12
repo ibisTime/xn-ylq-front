@@ -366,21 +366,36 @@ define([
 			}
 			return url + '\n' + arg + '\n' + arg_val;
 		},
-		//跳转 location.href
-		gohref: function(href,lang = NOWLANG) {
-			var timestamp = new Date().getTime();
-			//判断链接后是否有带参数
-			if(href.split("?")[1]) {
-				//判断是否有带v的参数，有则替换v的参数
-				if(Base.getUrlParam("v", href) != "" && Base.getUrlParam("v", href)) {
-					location.href = Base.changeURLArg(href, "v", timestamp);
-				} else {
-					location.href = href + "&v=" + timestamp + '&lang=' + lang;
-				}
-			} else {
-				location.href = href + "?v=" + timestamp + '&lang=' + lang;
-			}
-		},
+		// //跳转 location.href
+		// gohref: function(href,lang = NOWLANG) {
+		// 	var timestamp = new Date().getTime();
+		// 	//判断链接后是否有带参数
+		// 	if(href.split("?")[1]) {
+		// 		//判断是否有带v的参数，有则替换v的参数
+		// 		if(Base.getUrlParam("v", href) != "" && Base.getUrlParam("v", href)) {
+		// 			location.href = Base.changeURLArg(href, "v", timestamp);
+		// 		} else {
+		// 			location.href = href + "&v=" + timestamp + '&lang=' + lang;
+		// 		}
+		// 	} else {
+		// 		location.href = href + "?v=" + timestamp + '&lang=' + lang;
+		// 	}
+		// },
+      //跳转 location.href
+      gohref: function(href) {
+        var timestamp = new Date().getTime();
+        //判断链接后是否有带参数
+        if(href.split("?")[1]) {
+          //判断是否有带v的参数，有则替换v的参数
+          if(Base.getUrlParam("v", href) != "" && Base.getUrlParam("v", href)) {
+            location.href = Base.changeURLArg(href, "v", timestamp)
+          } else {
+            location.href = href + "&v=" + timestamp
+          }
+        } else {
+          location.href = href + "?v=" + timestamp
+        }
+      },
 		//跳转 location.replace
 		gohrefReplace: function(href,lang = NOWLANG) {
 			var timestamp = new Date().getTime();
