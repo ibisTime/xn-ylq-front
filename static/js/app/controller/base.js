@@ -475,62 +475,63 @@ define([
             }
         },
         getInitLocation: function (initFun, errFun){
-            var province = sessionStorage.getItem("province") || "",
-                city = sessionStorage.getItem("city") || "",
-                area = sessionStorage.getItem("area") || "",
-                longitude = sessionStorage.getItem("longitude", longitude) || "",
-                latitude = sessionStorage.getItem("latitude", latitude) || "";
-            // loading.createLoading("定位中...");
+            // var province = sessionStorage.getItem("province") || "",
+            //     city = sessionStorage.getItem("city") || "",
+            //     area = sessionStorage.getItem("area") || "",
+            //     longitude = sessionStorage.getItem("longitude", longitude) || "",
+            //     latitude = sessionStorage.getItem("latitude", latitude) || "";
+            loading.createLoading("定位中...");
 
-            if(!province){
-                //加载地图，调用浏览器定位服务
-                var map = new AMap.Map('', {
-                    resizeEnable: true
+            // if(!province){
+            //加载地图，调用浏览器定位服务
+            var map = new AMap.Map('', {
+                resizeEnable: true
+            });
+            map.plugin('AMap.Geolocation', function() {
+                var geolocation = new AMap.Geolocation({
+                    enableHighAccuracy: true,//是否使用高精度定位，默认:true
+                    timeout: 4000,          //超过5秒后停止定位，默认：无穷大
                 });
-                map.plugin('AMap.Geolocation', function() {
-                    var geolocation = new AMap.Geolocation({
-                        enableHighAccuracy: true,//是否使用高精度定位，默认:true
-                        timeout: 4000,          //超过5秒后停止定位，默认：无穷大
-                    });
-                    map.addControl(geolocation);
-                    geolocation.getCurrentPosition();
-                    AMap.event.addListener(geolocation, 'complete', function(data) {
-                        // alert(JSON.stringify(data))
-                        var lng = data.position.getLng(),
-                            lat = data.position.getLat(),
-                            addressComponent = data.addressComponent,
-                            province = addressComponent.province,
-                            city = addressComponent.city,
-                            area = addressComponent.district,
-                        township = addressComponent.township,
-                        street = addressComponent.street,
-                        streetNumber =  addressComponent.streetNumber;
+                map.addControl(geolocation);
+                geolocation.getCurrentPosition();
+                AMap.event.addListener(geolocation, 'complete', function(data) {
+                    // alert(JSON.stringify(data))
+                    var lng = data.position.getLng(),
+                        lat = data.position.getLat(),
+                        addressComponent = data.addressComponent,
+                        province = addressComponent.province,
+                        city = addressComponent.city,
+                        area = addressComponent.district,
+                    township = addressComponent.township,
+                    street = addressComponent.street,
+                    streetNumber =  addressComponent.streetNumber;
 
 
-                        if(province && city && area){
-                            sessionStorage.setItem("province",province),
-                                sessionStorage.setItem("city",city),
-                                sessionStorage.setItem("area",area),
-                                sessionStorage.setItem("street",township + street + streetNumber),
-                                sessionStorage.setItem("longitude", lng),
-                                sessionStorage.setItem("latitude", lat);
-                            loading.hideLoading();
-                            initFun();
-                        }else{
-                            loading.hideLoading();
-                            errFun();
-                        }
-
-                    });
-                    AMap.event.addListener(geolocation, 'error', function(data) {
+                    if(province && city && area){
+                        sessionStorage.setItem("province",province),
+                            sessionStorage.setItem("city",city),
+                            sessionStorage.setItem("area",area),
+                            sessionStorage.setItem("street",township + street + streetNumber),
+                            sessionStorage.setItem("longitude", lng),
+                            sessionStorage.setItem("latitude", lat);
                         loading.hideLoading();
-                        // errFun();
-                    });      //返回定位出错信息
+                        initFun();
+                    }else{
+                        loading.hideLoading();
+                        errFun();
+                    }
+
                 });
-            }else{
-                loading.hideLoading();
-                initFun();
-            }
+                AMap.event.addListener(geolocation, 'error', function(data) {
+                    alert(JSON.stringify(data));
+                    loading.hideLoading();
+                    // errFun();
+                });      //返回定位出错信息
+            });
+            // }else{
+            //     loading.hideLoading();
+            //     initFun();
+            // }
         },
 
     };

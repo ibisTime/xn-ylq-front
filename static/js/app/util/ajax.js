@@ -94,8 +94,8 @@ define([
                     return $.Deferred().reject(res.errorBizCode, res.errorInfo);
                 }
                 return res.data;
-            }).fail(function(error){
-                error && showMsg(error);
+            }).fail(function(error, errorInfo){
+                error && showMsg(errorInfo);
             });
         }
     };

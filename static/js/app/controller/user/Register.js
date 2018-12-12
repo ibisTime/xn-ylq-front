@@ -22,18 +22,15 @@ define([
     init();
 
     function init(){
-    	base.showLoading();
+        addListener();
         base.getInitLocation(function(res){
             dprovince = sessionStorage.getItem("province");
             dcity = sessionStorage.getItem("city");
             darea = sessionStorage.getItem("area");
             dstreet = sessionStorage.getItem("street");
             base.hideLoading();
-
-            addListener();
         },function(){
             base.hideLoading();
-            addListener();
             // base.showMsg("定位地址失败",1000);
         })
     }
