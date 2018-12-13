@@ -21,7 +21,8 @@ define([
         $(".primary-color").html(`${base.formatMoney(detail.amount-detail.xsAmount-detail.lxAmount-detail.glAmount-detail.fwAmount)}元`);
         $(".return-amount-final").html(`${base.formatMoney(detail.amount)}元`);
         addListener();
-      }).catch((res) => {
+        ProductCtr.read(code);
+      }).catch(() => {
         base.hideLoading();
 
       });

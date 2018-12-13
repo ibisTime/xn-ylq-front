@@ -7,7 +7,8 @@ define([
   var companyCode = base.getUrlParam("companyCode") || 'GSModelCode';
   var config = {
     start: 1,
-    limit: 10
+    limit: 10,
+    orderDir: '1'
   }, isEnd = false, canScrolling = false;
 
     init();
