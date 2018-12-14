@@ -14,10 +14,8 @@ define([
     var darea ;
     var dstreet ;
 
-    // 保存链接带的companyCode
-    if (!!companyCode) {
-        sessionStorage.setItem('companyCode', companyCode);
-    }
+    // 保存companyCode
+    sessionStorage.setItem('companyCode', companyCode);
 
     init();
 

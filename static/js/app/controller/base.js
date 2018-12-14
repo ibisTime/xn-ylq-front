@@ -538,7 +538,7 @@ define([
 
                 });
                 AMap.event.addListener(geolocation, 'error', function(data) {
-                    alert(JSON.stringify(data));
+                    console.log(JSON.stringify(data));
                     loading.hideLoading();
                     // errFun();
                 });      //返回定位出错信息
