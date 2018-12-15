@@ -421,6 +421,20 @@ label.error{
         background-position: center;
         background-size: cover;
         margin: 2rem auto 0;
+        position: relative;
+
+        .img{
+          width: 2.4rem;
+          height: 2.4rem;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          border-radius: .3rem;
+          background-position: center;
+          background-size: cover;
+          background-color: #00c9ba;
+        }
     }
     .title{
         width: 100%;

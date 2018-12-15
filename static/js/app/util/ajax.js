@@ -45,7 +45,11 @@ define([
                 token && (commonParams["token"] = token);
             }
             commonParams["systemCode"] = SYSTEM_CODE;
-            commonParams["companyCode"] = COMPANY_CODE;
+            if (sessionStorage.getItem('companyCode') != '' && sessionStorage.getItem('companyCode')) {
+                commonParams["companyCode"] = sessionStorage.getItem('companyCode');
+            } else {
+                commonParams["companyCode"] = COMPANY_CODE;
+            }
 
             json = $.extend(commonParams, json);
             var sendUrl = getUrl(code);

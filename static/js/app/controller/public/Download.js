@@ -4,6 +4,7 @@ define([
     'app/interface/GeneralCtr',
     'app/interface/UserCtr',
 ], function(base, Ajax, GeneralCtr, UserCtr) {
+    var companyCode = base.getUrlParam("companyCode") || '';
 
 	var iosUpdateUrl,androidUpdateUrl;
 
@@ -11,6 +12,7 @@ define([
 
     function init() {
         base.showLoading();
+        sessionStorage.setItem('companyCode', companyCode);
 
         $.when(
             getAppInfo(),
@@ -49,7 +51,8 @@ define([
     // 获取信息
     function getAppInfo(){
         return UserCtr.getCompanyInfo().then(function(data) {
-
+            $('.appName').html(data.name);
+            $('.logo-wrap .img').css({'background-image': `url('${base.getImg(data.logo)}')`});
         }, function() {
             base.showMsg("获取信息失败");
         });

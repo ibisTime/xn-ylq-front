@@ -1,5 +1,5 @@
 var SYSTEM_CODE = "CD-YLQ000014";
-var COMPANY_CODE = sessionStorage.getItem('companyCode') || "GSModelCode";
+var COMPANY_CODE = "GSModelCode";
 
 //七牛地址
 var PIC_PREFIX = 'http://pihh877nu.bkt.clouddn.com/';

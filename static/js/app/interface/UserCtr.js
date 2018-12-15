@@ -10,7 +10,7 @@ define([
     	// 获取公司信息
     	getCompanyInfo(){
     		return Ajax.get("630307", {
-    			code: COMPANY_CODE
+    			code: sessionStorage.getItem('companyCode') || COMPANY_CODE
     		}, true);
     	},
     };

@@ -14,12 +14,12 @@ define([
     var darea ;
     var dstreet ;
 
-    // 保存companyCode
-    sessionStorage.setItem('companyCode', companyCode);
-
     init();
 
     function init(){
+        // 保存companyCode
+        sessionStorage.setItem('companyCode', companyCode);
+
         addListener();
         base.getInitLocation(function(res){
             dprovince = sessionStorage.getItem("province");
@@ -40,7 +40,7 @@ define([
     		var msg = "注册成功，请下载APP！";
 
             base.confirm(msg, "取消","前往下载").then(function(){
-                window.location.href = DOWNLOADLINK+'.html';
+                window.location.href = DOWNLOADLINK+ '.html?companyCode=' +companyCode
     		},function(){})
 
         }, () => {
@@ -109,7 +109,7 @@ define([
         $(".r-protocol").click(function(){
             $(".popup-protocol").fadeIn(500);
             GeneralCtr.getSysConfigKey('regProtocol').then(function(data) {
-                $(".r-popup-tit").html(data.remark)
+                $(".r-popup-tit").html(data.remark);
                 $(".r-popup-conten").html(data.cvalue)
             }, function() {
                 base.showMsg("获取注册协议失败");
@@ -117,7 +117,7 @@ define([
         });
 
         $(".goDownload").click(function(){
-            window.location.href= DOWNLOADLINK + '.html';
+            window.location.href= DOWNLOADLINK + '.html?companyCode=' +companyCode;
         });
 
     }
