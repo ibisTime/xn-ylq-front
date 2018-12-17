@@ -417,7 +417,7 @@ label.error{
     .logo-wrap{
         width: 3rem;
         height: 3rem;
-        background-image: url(/static/images/logo.png);
+        background-image: url(/static/images/border.png);
         background-position: center;
         background-size: cover;
         margin: 2rem auto 0;
@@ -433,7 +433,7 @@ label.error{
           border-radius: .3rem;
           background-position: center;
           background-size: cover;
-          background-color: #00c9ba;
+          //background-color: #00c9ba;
         }
     }
     .title{

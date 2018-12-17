@@ -4,11 +4,12 @@ define([
 ], function(base, ProductCtr) {
   var code = base.getUrlParam("code") || '';
   var userRefereeKind = base.getUrlParam("userRefereeKind") || '';
-  var companyCode = base.getUrlParam("companyCode") || 'GSModelCode';
+  var companyCode = base.getUrlParam("companyCode") || '';
   var config = {
     start: 1,
     limit: 10,
-    orderDir: '1'
+    orderDir: '1',
+    companyCode: companyCode
   }, isEnd = false, canScrolling = false;
 
     init();
@@ -37,7 +38,7 @@ define([
         isEnd && $("#loadAll").removeClass("hidden");
         config.start++;
       } else if(config.start == 1) {
-        $(".product-list-container").html('<div class="no-data-img"><img src="/static/images/no-data.png"/><p>暂未发布产品</p></div>');
+        $(".product-list-container").html('<div class="no-data-img"><p>暂未发布产品</p></div>');
         $("#loadAll").addClass("hidden");
       } else {
         $("#loadAll").removeClass("hidden");
