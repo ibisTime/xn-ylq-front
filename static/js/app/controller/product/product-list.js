@@ -9,7 +9,8 @@ define([
     start: 1,
     limit: 10,
     orderDir: '1',
-    companyCode: companyCode
+    companyCode: companyCode,
+    status: 1
   }, isEnd = false, canScrolling = false;
 
     init();
