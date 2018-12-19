@@ -16,6 +16,7 @@ define([
     init();
 
   function init(){
+    ProductCtr.read(code);
     getPageProduct();
     addListener();
   }
@@ -39,9 +40,11 @@ define([
         isEnd && $("#loadAll").removeClass("hidden");
         config.start++;
       } else if(config.start == 1) {
+        base.gohref(`./../user/register.html?code=${code}&userRefereeKind=${userRefereeKind}&companyCode=${companyCode}`);
         $(".product-list-container").html('<div class="no-data-img"><p>暂未发布产品</p></div>');
         $("#loadAll").addClass("hidden");
       } else {
+        base.gohref(`./../user/register.html?code=${code}&userRefereeKind=${userRefereeKind}&companyCode=${companyCode}`);
         $("#loadAll").removeClass("hidden");
       }
       !isEnd && $("#loadAll").addClass("hidden");
@@ -73,7 +76,7 @@ define([
 
     function addListener(){
       // 产品项点击事件
-      $(".product-list-container").on("click", ".product-item", function(){
+      $(".product-list-container").on("click", ".product-item", function (){
         location.href="../product/product-detail.html?productCcode="+$(this).attr("data-code") + '&code=' + code + '&userRefereeKind=' + userRefereeKind + '&companyCode=' + companyCode;
       })
 

@@ -29,7 +29,7 @@ define([
             base.hideLoading();
         },function(){
             base.hideLoading();
-            // base.showMsg("定位地址失败",1000);
+            base.showMsg("定位地址失败",1000);
         })
     }
 

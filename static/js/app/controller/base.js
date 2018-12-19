@@ -540,7 +540,7 @@ define([
                 AMap.event.addListener(geolocation, 'error', function(data) {
                     console.log(JSON.stringify(data));
                     loading.hideLoading();
-                    // errFun();
+                    errFun();
                 });      //返回定位出错信息
             });
             // }else{
