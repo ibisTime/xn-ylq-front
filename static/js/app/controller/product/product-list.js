@@ -16,7 +16,10 @@ define([
     init();
 
   function init(){
-    ProductCtr.read(code);
+    ProductCtr.read({
+      code: code,
+      type: 0
+    });
     getPageProduct();
     addListener();
   }

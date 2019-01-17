@@ -3,11 +3,13 @@ define([
     'app/interface/UserCtr',
     'app/module/validate',
     'app/module/smsCaptcha',
-    'app/interface/GeneralCtr'
-], function(base, UserCtr, Validate, smsCaptcha, GeneralCtr) {
+    'app/interface/GeneralCtr',
+    'app/interface/ProductCtr'
+], function(base, UserCtr, Validate, smsCaptcha, GeneralCtr, ProductCtr) {
     var companyCode = base.getUrlParam("companyCode") || '';
     var userReferee = base.getUrlParam("userReferee") || base.getUrlParam("code") || '';
     var userRefereeKind = base.getUrlParam("userRefereeKind") || '';
+    var code = base.getUrlParam("code") || '';
     var timer;
     var dprovince ;
     var dcity ;
@@ -18,6 +20,10 @@ define([
 
     function init(){
         // 保存companyCode
+        ProductCtr.read({
+          code: code,
+          type: 1
+        });
         sessionStorage.setItem('companyCode', companyCode);
 
         addListener();
